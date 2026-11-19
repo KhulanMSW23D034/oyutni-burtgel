@@ -16,6 +16,7 @@ public partial class Form1 : Form
     {
         Text = "Оюутны бүртгэлийн программ - Лаб 05";
         button1.Text = "Бүртгэх";
+        textBox1.MaxLength = 20;
         maskedTextBox1.Mask = "0000-0000";
         comboBox1.Items.AddRange(new object[]
         {
@@ -120,6 +121,16 @@ public partial class Form1 : Form
             return;
         }
 
+        foreach (ListViewItem row in listView1.Items)
+        {
+            if (row.Text == textBox1.Text.Trim())
+            {
+                Warn("Энэ код өмнө нь бүртгэгдсэн байна.");
+                textBox1.Focus();
+                return;
+            }
+        }
+
         Student s = new Student();
         s.Name = textBox1.Text.Trim();
         s.Phone = maskedTextBox1.Text;
@@ -141,6 +152,7 @@ public partial class Form1 : Form
         item.Tag = s;
         listView1.Items.Add(item);
         labelTotal.Text = "Нийт: " + listView1.Items.Count;
+        Text = "Оюутны бүртгэлийн программ - Нийт: " + listView1.Items.Count;
 
         notifyIcon1.Visible = true;
         notifyIcon1.ShowBalloonTip(2000, "Бүртгэл амжилттай", s.Name + " бүртгэгдлээ.", ToolTipIcon.Info);
